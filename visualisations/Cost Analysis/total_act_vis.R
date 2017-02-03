@@ -9,3 +9,6 @@ totalActualsProductLines <- plot_ly(ncdata_posactuals, x = ~ncdata_posactuals$`T
       title = "Total Actuals", 
       showgrid = T)
   )
+
+
+histTotalActuals <- plot_ly(x = ~ncdata_posactuals$`Total Actuals`, type = "histogram")
