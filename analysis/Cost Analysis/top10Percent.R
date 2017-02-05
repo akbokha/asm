@@ -1,8 +1,9 @@
 library(plotrix)
+library(plotly)
 
 mytable <- table(top10percentage$`Product Line`)
 lbls <- paste(names(mytable), "\n", mytable, sep="")
-# pie10percent_ProductLines <-pie3D(mytable, labels = lbls,  main="Product Lines in the top 10 percent", explode = 0.06)
+pie10percent_ProductLines <-pie3D(mytable, labels = lbls,  main="Product Lines in the top 10 percent", explode = 0.06)
 
 companies <- unique(top10percentage$Customer)
 sumcompanies <- c()
@@ -26,7 +27,19 @@ for (i in 1:length(sumcompanies)){
 barchartcompanies <- plot_ly(
   x = companies,
   y = sumcompanies,
-  name = "SF Zoo",
+  name = "Sum Total Actuals per Company",
   type = "bar",
   marker = list(color = colors)
 )
+
+top10percentage_defectgroup <- top10percentage[top10percentage$`Defect Group` != "9/Not assigned",]
+mytable2 <- table(top10percentage_defectgroup$`Defect Group`)
+lbls2 <- paste(names(mytable2), "\n", mytable2, sep="")
+pie_defectgroup <- pie(mytable2, labels = lbls2,  main="Defect Groups in the top 10 percent")
+
+pq <- plot_ly(top10percentage_defectgroup, values = top10percentage_defectgroup$`Defect Group`,  type = 'pie') %>%
+  layout(title = 'United States Personal Expenditures by Categories in 1960',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+
