@@ -18,5 +18,3 @@ ncdata_posactuals_inc <- ncdata_posactuals[order(ncdata_posactuals$`Total Actual
 
 #same data as ncdata, but only the rows (nc's) that have Total actuals ==0
 ncdata_zeroactuals <- ncdata[ncdata$`Total Actuals`==0.0,]
-
-# jelmer test commit
