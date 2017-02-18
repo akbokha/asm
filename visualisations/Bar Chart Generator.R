@@ -1,27 +1,36 @@
 #With this function we will generate standard vertical bar chart plots
-#The function needs two arguments: the data frame and 
-#The column of the data frame you want to analyze
-Standard_Bar_NC <- function(My_Column, Column_Name = NULL, My_DF = NULL) {
+#The function has two arguments: the column of the data frame and 
+#if necessary the new name you give this column
+Standard_Bar_NC <- function(My_Column, Column_Name = NULL) {
   
-  #Gets the column name. 
-  #Preferred Method: if it works there will be no need to specify the column name 
-  #Column_Index <- match(My_Column,names(My_DF))
-  #Column_Name <- names((My_DF[Column_Index]))
-  
+  #Extract the column name; structure of column name is always
+  #ncdata$Column_Name or ncdata$'Column Name'.
+  Column_String <- deparse(substitute(My_Column))
+  Given_Axis <- if (is.na(match("'",Column_String))) {
+    substring(Column_String,8)
+    } else {
+      substring(Column_String,9, nchars(Column_String) - 1)
+    }
   #Makes a data frame with the number of NC's for each group
-  Column_Count <- aggregate(data.frame(count = My_Column), list(Column_Name = My_Column), length)
+  Column_Count <- aggregate(data.frame(count = My_Column), list(count_by = My_Column), length)
   
   #Input for bar chart
   Y_Axis <- Column_Count$count
-  X_Axis <- Column_Count$Column_Name
-  #Provides names for the title and Y Axis
-  Bar_Chart_Title <- paste("Number of NC's per", Column_Name)
+  X_Axis <- Column_Count$count_by
+  #Provides names for the Y axis, X axis and title
   Y_Axis_Name <- "Number of NC's"
+  X_Axis_Name <- if (is.null(Column_Name)) {
+    Given_Axis
+    } else {
+      Column_Name
+    }
+  Bar_Chart_Title <- paste("Number of NC's per", X_Axis_Name)
   #generate the bar chart using plot_ly
   plot_ly(x = X_Axis, y = Y_Axis, type = 'bar', mode = 'markers') %>%
     layout(title = Bar_Chart_Title, 
            yaxis = list(title = Y_Axis_Name), 
-           xaxis = list(title = Column_Name))
+           xaxis = list(title = X_Axis_Name))
 }
 #Trying with the customer set.
-Standard_Bar_NC(ncdata$Customer, Column_Name = "Customer")
+Standard_Bar_NC(ncdata$'Customer')
+
