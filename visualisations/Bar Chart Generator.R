@@ -25,3 +25,4 @@ Standard_Bar_NC <- function(My_Column, Column_Name = NULL, My_DF = NULL) {
 }
 #Trying with the customer set.
 Standard_Bar_NC(ncdata$Customer, Column_Name = "Customer")
+
