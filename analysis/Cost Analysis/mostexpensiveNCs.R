@@ -50,14 +50,14 @@ ncdata2["Cumulative Percentage"] <- cumsum(ncdata2$Factor)
 
 s <-  plot_ly(ncdata2, y = ncdata2$`Cost Percentage Cumulative`, type="scatter", mode = 'lines', name= "Percentage",
               line = list(color = 'rgb(255, 135, 43)', width = 4, dash= "line")) %>%
-  layout(title = "Cumalative percentage of the total costs of the NC's",
+  layout(title = "Cumulative percentages of the total costs of the NC's",
          paper_bgcolor='rgb(255,255,255)', plot_bgcolor='rgb(229,229,229)',
          yaxis = list(title = "Percentage"),
          xaxis = list (title = "Number of NC's (Increasing Cost Order)"))
 
 t <- plot_ly(ncdata2, y = ncdata2$`Cost Percentage Cumulative`, x= ncdata2$`Cumulative Percentage`, type="scatter", mode = 'lines', name= "Percentage", fill = 'tozeroy', fillcolor = 'rgba(255, 212, 96, 0.5)',
              line = list(color = 'rgb(255, 135, 43)', width = 5, dash= "line")) %>%
-  layout(title = "Cumalative percentage of the total costs of the NC's",
+  layout(title = "Cumulative percentages of the total costs of the NC's",
          paper_bgcolor='rgb(255,255,255)', plot_bgcolor='rgb(229,229,229)',
          yaxis = list(title = "Percentage of the total costs"),
          xaxis = list (title = "Percentage of NC's (Increasing Cost Order)"))
