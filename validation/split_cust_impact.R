@@ -20,12 +20,12 @@ for (i in 1:5258) {
 
 # WaferScrap Attribute
 for (i in 1:5258) {
-  if (grepl("^No wafer Scrap$", ncdata[i,]$`Customer Impact Descr`, fixed = TRUE)) {
+  if (grepl("No Wafer", ncdata[i,]$`Customer Impact Descr`, fixed = TRUE)) {
     ncdata[i,]$WaferScrap <- "No"
   }
   else {
     if (!(grepl("Not Assigned", ncdata[i,]$`Customer Impact Descr`, fixed = TRUE))) {
-      ncdata[i,]$WaferScrap <- "Yes"
+     ncdata[i,]$WaferScrap <- "Yes"
     }
   }
 }
@@ -41,3 +41,5 @@ for (i in 1:5258) {
     }
   }
 }
+
+#  View(ncdata[c(10, 51:53)])
