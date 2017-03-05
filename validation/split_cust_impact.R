@@ -11,7 +11,7 @@ for (i in 1:5258) {
     ncdata[i,]$Safety <- "No"
   }
   else {
-    if (!(grepl("Not Assigned", ncdata[i,]$`Customer Impact Descr`, fixed = TRUE))) {
+    if (!(is.na(ncdata[i,]$`Customer Impact Descr`))) {
       ncdata[i,]$Safety <- "Yes"
     }
   }
@@ -24,7 +24,7 @@ for (i in 1:5258) {
     ncdata[i,]$WaferScrap <- "No"
   }
   else {
-    if (!(grepl("Not Assigned", ncdata[i,]$`Customer Impact Descr`, fixed = TRUE))) {
+    if (!(is.na(ncdata[i,]$`Customer Impact Descr`))) {
      ncdata[i,]$WaferScrap <- "Yes"
     }
   }
@@ -36,7 +36,7 @@ for (i in 1:5258) {
     ncdata[i,]$Downtime <- "No"
   }
   else {
-    if (!(grepl("Not Assigned", ncdata[i,]$`Customer Impact Descr`, fixed = TRUE))) {
+    if (!(is.na(ncdata[i,]$`Customer Impact Descr`))) {
       ncdata[i,]$Downtime <- "Yes"
     }
   }

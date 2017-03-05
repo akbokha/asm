@@ -8,6 +8,22 @@ ncdata <- read_excel("C:/_Storage/asm/170120 Non Conformance Data 2013.xlsx")
 #remove last row with only NA values
 ncdata <- head(ncdata, -1)
 
+#make all "Not Assigned" Values the same across al columns ("blanks")
+
+for (i in 1: 5258) {
+  for (j in 1:50) {
+    if (grepl(ncdata[i, j], "Not assigned", fixed= TRUE) ||
+        grepl(ncdata[i, j], "Not Assigned", fixed= TRUE) ||
+        grepl(ncdata[i, j], "9/Not assigned/Not assigned", fixed= TRUE) ||
+        grepl(ncdata[i, j], "9/Not assigned", fixed= TRUE) ||
+        grepl(ncdata[i, j], "5/Not assigned", fixed= TRUE) ||
+        grepl(ncdata[i, j], "5/Not assigned/Not assigned", fixed= TRUE)) 
+      {
+      ncdata[i, j] <- NA
+    }
+  }
+}
+
 #FINANCIAL ANALYSIS----------------------------------------------------------------
 #same data as ncdata, but without the rows (nc's) that have Total actuals == 0 euro
 ncdata_posactuals <- ncdata[ncdata$`Total Actuals`!=0.0,]
