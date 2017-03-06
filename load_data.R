@@ -9,7 +9,6 @@ ncdata <- read_excel("C:/_Storage/asm/170120 Non Conformance Data 2013.xlsx")
 ncdata <- head(ncdata, -1)
 
 #make all "Not Assigned" Values the same across al columns ("blanks")
-
 for (i in 1: 5258) {
   for (j in 1:50) {
     if (grepl(ncdata[i, j], "Not assigned", fixed= TRUE) ||
@@ -30,7 +29,6 @@ ncdata_posactuals <- ncdata[ncdata$`Total Actuals`!=0.0,]
 
 #same data, but sorted (increasing on Total Actuals)
 ncdata_posactuals_inc <- ncdata_posactuals[order(ncdata_posactuals$`Total Actuals`, decreasing = FALSE),]
-
 
 #same data as ncdata, but only the rows (nc's) that have Total actuals ==0
 ncdata_zeroactuals <- ncdata[ncdata$`Total Actuals`==0.0,]
