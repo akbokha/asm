@@ -1,0 +1,5 @@
+library(readxl)
+library(ggplot2)
+library(plotly)
+library(plyr)
+earchive <- read_excel("D:/earchive.xlsx")
