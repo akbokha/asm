@@ -18,5 +18,7 @@ ncdata_lowcategories <- ncdata[Low_Vector]
 #bar chart generator applyen op al deze kolommen
 apply(ncdata_lowcategories, MARGIN = 2, FUN = function(x) Standard_Bar_NC(x))
 
-#namen komen niet automatisch mee... weet niet zo goed hoe ik dat moet oplossen
+#namen komen niet automatisch mee... weet niet zo goed hoe ik dat moet oplossen. Resultaten 
+#heb ik geanalyseerd.
+
 
