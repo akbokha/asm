@@ -12,6 +12,7 @@ totalcosts <- sum(ncdata$`Total Actuals`)
 ncdata$`Cost Percentage` <- (ncdata$`Total Actuals` / totalcosts) * 100
 
 top10percentage <- ncdata[4733:5258,]
+top10percentage <- top10percentage[!is.na(top10percentage$`Total Actuals`),]
 
 #plotpercentage <- plot(top10percentage$'Cost Percentage', type = "l", main = "Percentage of total cost in the top 10 percent most expensive NC's")
 

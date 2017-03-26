@@ -1,3 +1,5 @@
+# Execute mostexpensiveNCs.R first
+
 library(plotrix)
 library(plotly)
 
