@@ -69,5 +69,45 @@ CustomerNCS$ID.y <- NULL
 CustomerNCS$'NCs per Machine' <- CustomerNCS$NumberOfNCs / CustomerNCS$NumberOfMachines
 
 plot_ly(CustomerNCS, x=~CustomerNCS$Customer, y=~CustomerNCS$`NCs per Machine`, type = 'bar', mode='markers') %>%
-  layout(title="Average Number of NC's per Machine")
+  layout(title="Average Number of NC's per Machine per Customer", xaxis = (list(title = "")), yaxis = (list(title = "NC's per machine")))
 CustomerNCS
+
+Standard_Bar_NC(AllCustomers_MachineData$Type)
+Standard_Bar_NC(earchive_correct$Type)
+
+#functie waarmee ik makkelijk van een kolom een data frame kan maken met daarin de unieke waarden + aantallen
+CategoryFrame <- function(My_Column, Col1 = NULL, Col2 = NULL, Col3 = NULL, Col4 = NULL, Col5 = NULL, Col6 = NULL) {
+  NrOfCategories <- aggregate(data.frame(count = My_Column), list(count_by = My_Column), length)
+  NrOfCategories <- as.data.frame(NrOfCategories)
+  NrOfCategoriesA <- setDT(NrOfCategories, keep.rownames = TRUE)
+  colnames(NrOfCategoriesA) <- c(Col1, Col2, Col3, Col4, Col5, Col6)
+  NrOfCategoriesA
+}
+
+#Functie op de twee datasets gebruiken
+NrOfETypes <- CategoryFrame(earchive_correct$Type, Col1 = "ID",Col2 = "Type", Col3 = "Number of Instances")
+NrOfATypes <- CategoryFrame(AllCustomers_MachineData$Type, "ID", "Type", "Number of Instances")
+
+#Twee dataframes mergen en gemiddelde uitrekenen per type
+MergedTypes <- merge(NrOfATypes, NrOfETypes, by = "Type")
+MergedTypes$ID.x <- NULL
+MergedTypes$ID.y <- NULL
+MergedTypes$Average <- MergedTypes$`Number of Instances.x` / MergedTypes$`Number of Instances.y`
+
+plot_ly(MergedTypes, x=~MergedTypes$Type, y=~MergedTypes$Average, type = 'bar', mode = 'markers') %>%
+  layout(title="Average Number of NC's per Type", xaxis = (list(title = "Type")), yaxis = (list(title = "Average number of NC's")))
+
+
+NrOfEProducts <- CategoryFrame(earchive_correct$PN, "ID", "PN", "Number of Instances")
+NrOfEProducts
+
+NrOfAProducts <- CategoryFrame(AllCustomers_MachineData$PN, "ID", "PN", "Number of Instances")
+NrOfAProducts
+
+MergedProducts <- merge(NrOfAProducts, NrOfEProducts, by = "PN")
+MergedProducts$ID.x <- NULL
+MergedProducts$ID.y <- NULL
+MergedProducts$Averages <- MergedProducts$`Number of Instances.x` / MergedProducts$`Number of Instances.y`
+MergedProducts
+plot_ly(MergedProducts, x=~MergedProducts$PN, y=~MergedProducts$Averages, type = 'bar', mode = 'markers') %>%
+  layout(title="Average Number of NC's per Product", xaxis = (list(title = "PN")), yaxis = (list(title = "Average number of NC's")))
