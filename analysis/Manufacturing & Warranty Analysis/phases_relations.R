@@ -14,3 +14,17 @@ ncdata_phases <- ncdata_phases[ncdata_phases$`NC Equipment Phase` != "Non Custom
 
 unique_count <- unique(ncdata_phases$`Equipment descr`)
 unique_count <- length(unique_count)
+
+# 1050 unique machines in the dataset (/4626)
+
+ncdata_phases$Manufacturing <- FALSE
+ncdata_phases$Manufacturing[ncdata_phases$`NC Equipment Phase` == "Manufacturing"] <- TRUE
+
+ncdata_phases$IandQ <- FALSE
+ncdata_phases$IandQ[ncdata_phases$`NC Equipment Phase` == "I&Q"] <- TRUE
+
+ncdata_phases$Warranty <- FALSE
+ncdata_phases$Warranty[ncdata_phases$`NC Equipment Phase` == "Warranty"] <- TRUE
+
+ncdata_phases$Contract <- FALSE
+ncdata_phases$Contract[ncdata_phases$`NC Equipment Phase` == "Contract"] <- TRUE
