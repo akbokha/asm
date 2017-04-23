@@ -28,3 +28,16 @@ ncdata_phases$Warranty[ncdata_phases$`NC Equipment Phase` == "Warranty"] <- TRUE
 
 ncdata_phases$Contract <- FALSE
 ncdata_phases$Contract[ncdata_phases$`NC Equipment Phase` == "Contract"] <- TRUE
+
+ncdata$Manufacturing_toNC <- FALSE
+ncdata$IandQ_toNC <- FALSE
+
+# making subsets for each phase + a subset for the warranty and contract phase combined
+warranty_phase <- ncdata_phases[ncdata_phases$Warranty,]
+manufacturing_phase <- ncdata_phases[ncdata_phases$Manufacturing,]
+IandQ_phase <- ncdata_phases[ncdata_phases$IandQ,]
+contract_phase <- ncdata_phases[ncdata_phases$Contract,]
+warrantycontract_phase <- ncdata_phases[ncdata_phases$Contract | ncdata_phases$Warranty,]
+
+#the machines that can be found in both the manufacturing and the warranty/contractphase
+man_to_warrantycontract <- merge(manufacturing_phase, warrantycontract_phase, by = "Equipment descr")
