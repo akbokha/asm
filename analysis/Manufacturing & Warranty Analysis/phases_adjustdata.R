@@ -40,4 +40,15 @@ contract_phase <- ncdata_phases[ncdata_phases$Contract,]
 warrantycontract_phase <- ncdata_phases[ncdata_phases$Contract | ncdata_phases$Warranty,]
 
 #the machines that can be found in both the manufacturing and the warranty/contractphase
-man_to_warrantycontract <- merge(manufacturing_phase, warrantycontract_phase, by = "Equipment descr")
+manufacturing_phase$NC_WarrantyContract <- FALSE
+count <- 0
+
+for (i in 1:nrow(manufacturing_phase)) {
+  for (j in 1:nrow(warrantycontract_phase)) {
+    if (grepl(manufacturing_phase[i,]$`Equipment descr`,
+              warrantycontract_phase[j,]$`Equipment descr`, fixed = TRUE)) {
+      count <- count + 1
+      manufacturing_phase[i,]$NC_WarrantyContract <- TRUE
+    }
+  }
+}
