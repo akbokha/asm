@@ -22,7 +22,7 @@ ncdata_test <- ncdata_test[ncdata_test$`NC Equipment Phase` != "Non Customer rel
 unique_count <- unique(ncdata_phases$`Equipment descr`)
 unique_count <- length(unique_count)
 
-# 1050 unique machines in the dataset (/4626)
+# 494 unique machines in the dataset (/3208)
 
 ncdata_phases$Manufacturing <- FALSE
 ncdata_phases$Manufacturing[ncdata_phases$`NC Equipment Phase` == "Manufacturing"] <- TRUE
