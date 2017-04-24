@@ -43,5 +43,8 @@ for (i in 1:nrow(test_man_contract_phase)) {
   }
 }
 
+# 398 out of 633 records are have the value TRUE for NC_WarrantyContract (62.8%)
+# So pretty decent test dataset
+
 # so the model has to fill in the attribute NC_WarrantyContract in the test_model file
 # and the accuracy of the prediction can be tested with the NC_WarrantyContract as found in test_man_contract_phase 
