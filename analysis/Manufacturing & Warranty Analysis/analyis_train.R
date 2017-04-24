@@ -10,10 +10,19 @@ library(rpart)
 # man_conctract_phase contains the same records as records_to_analyse, but the difference is that man_contract_phase also
 # contains records for machines that have a NC in the Manufacturing/I&Q phases, but not later again in the 
 # warranty/contract phases
+train_set <- man_contract_phase
 
-fit <- rpart(NC_WarrantyContract ~ `Total Actuals`,
-             data=man_contract_phase,
-             method="class")
+train_set$`Cause Group` = as.factor(train_set$`Cause Group`)
+train_set$`Defect Group` = as.factor(train_set$`Defect Group`)
+train_set$`Product Line` = as.factor(train_set$`Product Line`)
+
+fit <- rpart(NC_WarrantyContract ~ `Cause Group` + `Defect Group` + `Material type` + `Order type` + `Consumable`
+             + `Product Line` + `Equipment Status` + `NC Disposition`,
+             data=train_set,
+             method="class", control=rpart.control(minsplit=2, minbucket=1, cp=0.001))
+
+test_model$`Cause Group` = as.factor(test_model$`Cause Group`)
+test_model$`Defect Group` = as.factor(test_model$`Defect Group`)
 
 test_prediction <- predict(fit, test_model, type = "class")
 
