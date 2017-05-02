@@ -1,8 +1,13 @@
 # make sure to load ncdata again (wihout modifications that could affect this analysis) in your global environment
 
+# ncdata is ordered (on dates)
+# shuffle records
+
+ncdata_shuffled <- ncdata[sample(nrow(ncdata)),]
+
 # split data 70/30 (70% train, 30% test)
-ncdata_train <- ncdata[1:3681,]
-ncdata_test <- ncdata[3682:5258,]
+ncdata_train <- ncdata_shuffled[1:3681,]
+ncdata_test <- ncdata_shuffled[3682:5258,]
 
 # removing all the records (approx. 600) that are non-customer related
 # these records have NA values for the Equipment descr attribute and the NC Equipment Phase attribute
