@@ -67,9 +67,18 @@ CustomerNCS$ID.y <- NULL
 
 #Bereken gemiddelde aantal NC's per Machine
 CustomerNCS$'NCs per Machine' <- CustomerNCS$NumberOfNCs / CustomerNCS$NumberOfMachines
-
-plot_ly(CustomerNCS, x=~CustomerNCS$Customer, y=~CustomerNCS$`NCs per Machine`, type = 'bar', mode='markers') %>%
-  layout(title="Average Number of NC's per Machine per Customer", xaxis = (list(title = "")), yaxis = (list(title = "NC's per machine")))
+colors <- c()
+for (i in 1:nrow(CustomerNCS)) {
+  if (CustomerNCS[i,]$`NCs per Machine` >= 8) {
+    colors <- append(colors, 'rgba(222,45,38,1)')
+  } else if (CustomerNCS[i,]$`NCs per Machine` >= 4) {
+    colors <- append(colors, 'rgba(255, 135, 43, 0.8')
+  } else {
+    colors <- append(colors, 'rgba(204,204,204,1)')
+  }
+}
+plot_ly(CustomerNCS, x=~CustomerNCS$Customer, y=~CustomerNCS$`NCs per Machine`, marker = list(color = colors), type = 'bar', mode='markers') %>%
+  layout(title="Average Number of NC's per Machine per Customer", xaxis = (list(categoryarray = ~'NCs per Machine', categoryarray = "array", title = "")), yaxis = (list(title = "NC's per machine")))
 CustomerNCS
 
 Standard_Bar_NC(AllCustomers_MachineData$Type)
@@ -108,6 +117,24 @@ MergedProducts <- merge(NrOfAProducts, NrOfEProducts, by = "PN")
 MergedProducts$ID.x <- NULL
 MergedProducts$ID.y <- NULL
 MergedProducts$Averages <- MergedProducts$`Number of Instances.x` / MergedProducts$`Number of Instances.y`
-MergedProducts
-plot_ly(MergedProducts, x=~MergedProducts$PN, y=~MergedProducts$Averages, type = 'bar', mode = 'markers') %>%
-  layout(title="Average Number of NC's per Product", xaxis = (list(title = "PN")), yaxis = (list(title = "Average number of NC's")))
+MergedProducts <- MergedProducts[order(MergedProducts$Averages),]
+
+#kleurtjes
+colors2 <- c()
+for (i in 1:nrow(MergedCurrentProducts)) {
+  if (MergedCurrentProducts[i,]$Averages >= 20) {
+    colors2 <- append(colors2, 'rgba(0,0,0,1)')
+  } else if (MergedCurrentProducts[i,]$Averages >= 5) {
+    colors2 <- append(colors2, 'rgba(50, 205, 50, 0.8')
+  } else {
+    colors2 <- append(colors2, 'rgba(230,230,250,1)')
+  }
+}
+plot_ly(MergedProducts, x=~MergedProducts$PN, y=~MergedProducts$Averages, marker = list(color = colors2), type = 'bar', mode = 'markers') %>%
+  layout(title="Average Number of NC's per Product", xaxis = (list(categoryarray = ~Averages, categoryarray = "array", title = "PN")), yaxis = (list(title = "Average number of NC's")))
+
+#Als eerste alle product ID's niet beginnend met 2 filteren
+MergedCurrentProducts <- filter(MergedProducts, grepl("2E",PN)|grepl("2P",PN))
+
+plot_ly(MergedCurrentProducts, x=~MergedCurrentProducts$PN, y=~MergedCurrentProducts$Averages, marker = list(color = colors2), type = 'bar', mode = 'markers') %>%
+  layout(title="Average Number of NC's per Product", xaxis = (list(categoryarray = ~Averages, categoryarray = "array", title = "PN")), yaxis = (list(title = "Average number of NC's")))
