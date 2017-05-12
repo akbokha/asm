@@ -1,7 +1,7 @@
 #With this function we will generate standard vertical bar chart plots
 #The function has two arguments: the column of the data frame and 
 #if necessary the new name you give this column
-Standard_Bar_NC <- function(My_Column, Column_Name = NULL, Y_Name = NULL) {
+Standard_Bar_NC <- function(My_Column, Column_Name = NULL) {
   
   #Extract the column name; structure of column name is always
   #ncdata$Column_Name or ncdata$'Column Name'.
@@ -18,20 +18,13 @@ Standard_Bar_NC <- function(My_Column, Column_Name = NULL, Y_Name = NULL) {
   Y_Axis <- Column_Count$count
   X_Axis <- Column_Count$count_by
   #Provides names for the Y axis, X axis and title
-  Y_Axis_Name <- if (is.null(Y_Name)) {
-    "Number of NC's" } else {
-      Y_Name
-    }
+  Y_Axis_Name <- "Number of NC's"
   X_Axis_Name <- if (is.null(Column_Name)) {
-    paste("Number of NC's per", Given_Axis)
+    Given_Axis
   } else {
     Column_Name
   }
-  Bar_Chart_Title <- if (is.null(Column_Name)) {
-    paste("Number of NC's per", X_Axis_Name)
-  } else {
-    paste(Y_Axis_Name, "per", X_Axis_Name)
-  }
+  Bar_Chart_Title <- paste("Number of NC's per", X_Axis_Name)
   #generate the bar chart using plot_ly
   plot_ly(x = X_Axis, y = Y_Axis, type = 'bar') %>%
     layout(title = Bar_Chart_Title, 
