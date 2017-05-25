@@ -26,9 +26,9 @@ train_set$`Material type` = as.factor(train_set$`Material type`)
 
 fit <- rpart(NC_WarrantyContract ~ `Defect Group` 
              + `Product Line` + `Consumable` + 
-               `Equipment Status` + `NC Disposition`,
+               `Equipment Status`,
              data=train_set,
-             method="class", control=rpart.control(minsplit = 2, minbucket = 11, cp = 0.001))
+             method="class", control=rpart.control(minsplit = 2, minbucket = 11, cp = 0.005))
 
 test_model$`Cause Group` = as.factor(test_model$`Cause Group`)
 test_model$`Defect Group` = as.factor(test_model$`Defect Group`)
